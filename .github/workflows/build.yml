@@ -22,10 +22,11 @@ jobs:
 #       - name: msvc2019 build 
 #         shell: cmd
 #         run: cd elements\build && mingw32-make install
+
       - name: Build & Test
         uses: ashutoshvarma/action-cmake-build@master
         with:
-          build-dir: ${{ runner.workspace }}\build
+          build-dir: ${{ runner.workspace }}\elements\build
           # will set the CC & CXX for cmake
           # cc: clang
           # cxx: clang++
@@ -41,7 +42,7 @@ jobs:
         
 #       - name: Run 
 #         run: .\winapi-helloworld.exe
-#         working-directory: ${{ runner.workspace }}\build\Release
+#         working-directory: ${{ runner.workspace }}\elements\build\Release
 
       - name: test
         shell: cmd
@@ -51,7 +52,7 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          path: "elements/build"
+          path: ${{ runner.workspace }}\elements\build
           filename: "${{ env.mingwTargetZip }}"
           
       - name: Release prebuilt
