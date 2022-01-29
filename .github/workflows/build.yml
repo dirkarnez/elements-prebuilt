@@ -15,6 +15,9 @@ jobs:
       - name: git clone SFML
         run: git clone  --recursive --branch master https://github.com/cycfi/elements.git
 
+      - name: test
+        shell: cmd
+        run: cd elements && dir
 #       - name: cmake SFML
 #         shell: cmd
 #         run: cd elements && cmake.exe cmake -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/elements" -B./build
