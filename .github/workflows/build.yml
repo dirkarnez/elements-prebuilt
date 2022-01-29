@@ -13,7 +13,7 @@ jobs:
       mingwTargetZip: elements-${{ github.ref_name }}-mingw.zip
     steps:
       - name: git clone SFML
-        run: git clone --branch master https://github.com/cycfi/elements.git
+        run: git clone  --recursive --branch master https://github.com/cycfi/elements.git
 
       - name: cmake SFML
         shell: cmd
