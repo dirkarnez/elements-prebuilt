@@ -14,10 +14,7 @@ jobs:
     steps:
       - name: git clone SFML
         run: git clone  --recursive --branch master https://github.com/cycfi/elements.git
-
-      - name: test
-        shell: cmd
-        run: cd elements && dir
+        
 #       - name: cmake SFML
 #         shell: cmd
 #         run: cd elements && cmake.exe cmake -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/elements" -B./build
@@ -29,8 +26,8 @@ jobs:
       - name: Build & Test
         uses: ashutoshvarma/action-cmake-build@master
         with:
-          source-dir: ${{ runner.workspace }}\elements
-          build-dir: ${{ runner.workspace }}\elements\build
+          source-dir: elements
+          build-dir: elements\build
           # will set the CC & CXX for cmake
           # cc: clang
           # cxx: clang++
@@ -50,13 +47,13 @@ jobs:
 
       - name: test
         shell: cmd
-        run: dir
+        run: cd elements\build && dir
         
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          path: ${{ runner.workspace }}\elements\build
+          path: elements\build
           filename: "${{ env.mingwTargetZip }}"
           
       - name: Release prebuilt
