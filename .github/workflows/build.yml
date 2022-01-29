@@ -26,6 +26,7 @@ jobs:
       - name: Build & Test
         uses: ashutoshvarma/action-cmake-build@master
         with:
+          source-dir: ${{ runner.workspace }}\elements
           build-dir: ${{ runner.workspace }}\elements\build
           # will set the CC & CXX for cmake
           # cc: clang
