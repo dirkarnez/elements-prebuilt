@@ -15,13 +15,37 @@ jobs:
       - name: git clone SFML
         run: git clone  --recursive --branch master https://github.com/cycfi/elements.git
 
-      - name: cmake SFML
-        shell: cmd
-        run: cd elements && cmake.exe -G"MinGW Makefiles" -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/elements" -B./build
+#       - name: cmake SFML
+#         shell: cmd
+#         run: cd elements && cmake.exe cmake -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/elements" -B./build
       
-      - name: mingw build 
+#       - name: msvc2019 build 
+#         shell: cmd
+#         run: cd elements\build && mingw32-make install
+      - name: Build & Test
+        uses: ashutoshvarma/action-cmake-build@master
+        with:
+          build-dir: ${{ runner.workspace }}\build
+          # will set the CC & CXX for cmake
+          # cc: clang
+          # cxx: clang++
+          build-type: Release
+          # Extra options pass to cmake while configuring project
+          # configure-options: -DCMAKE_C_FLAGS=-w32 -DPNG_INCLUDE=OFF
+          # run-test: true
+          # ctest-options: -R mytest
+          # install the build using cmake --install
+          install-build: true
+          # run build using '-j [parallel]' to use multiple threads to build
+          parallel: 14
+        
+#       - name: Run 
+#         run: .\winapi-helloworld.exe
+#         working-directory: ${{ runner.workspace }}\build\Release
+
+      - name: test
         shell: cmd
-        run: cd elements\build && mingw32-make install
+        run: dir
         
       - name: Archive Release
         uses: thedoctor0/zip-release@master
