@@ -4,4 +4,4 @@ elements-prebuilt
 
 ### TODOs
 - [ ] mingw64 build
-- [ ] msvc2019 build be distributed in static library form
+- [ ] **msvc2019 build be distributed in static library form**
