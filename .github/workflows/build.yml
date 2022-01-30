@@ -2,17 +2,17 @@ name: elements-prebuilt-release-actions-workflow
 on:
   push:
     # Sequence of patterns matched against refs/tags
-    #tags:
-    #  - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build:
     name: Create Release
     runs-on: windows-latest
     env:
-      mingwTargetZip: elements-${{ github.ref_name }}-mingw.zip
+      msvc2019TargetZip: elements-${{ github.ref_name }}-msvc2019.zip
     steps:
-      - name: git clone SFML
+      - name: git clone elements
         run: git clone  --recursive --branch master https://github.com/cycfi/elements.git
         
 #       - name: cmake SFML
@@ -31,34 +31,33 @@ jobs:
           # will set the CC & CXX for cmake
           # cc: clang
           # cxx: clang++
+          target: ALL_BUILD
           build-type: Release
           # Extra options pass to cmake while configuring project
           # configure-options: -DCMAKE_C_FLAGS=-w32 -DPNG_INCLUDE=OFF
           # run-test: true
           # ctest-options: -R mytest
           # install the build using cmake --install
-          install-build: true
+          # install-build: true
           # run build using '-j [parallel]' to use multiple threads to build
+          # cmake --build . --target ALL_BUILD --config Release -- /nologo /verbosity:minimal /maxcpucount
+          build-options: /nologo /verbosity:minimal /maxcpucount
           parallel: 14
         
 #       - name: Run 
 #         run: .\winapi-helloworld.exe
 #         working-directory: ${{ runner.workspace }}\elements\build\Release
-
-      - name: test
-        shell: cmd
-        run: cd elements\build && dir
         
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          path: elements\build
-          filename: "${{ env.mingwTargetZip }}"
+          path: elements
+          filename: "${{ env.msvc2019TargetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ env.mingwTargetZip }}"
+          artifacts: "${{ env.msvc2019TargetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
