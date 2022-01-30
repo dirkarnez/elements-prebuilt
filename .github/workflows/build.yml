@@ -41,7 +41,7 @@ jobs:
           # install-build: true
           # run build using '-j [parallel]' to use multiple threads to build
           # cmake --build . --target ALL_BUILD --config Release -- /nologo /verbosity:minimal /maxcpucount
-          build-options: /nologo /verbosity:minimal /maxcpucount
+          build-options: -- /nologo /verbosity:minimal /maxcpucount
           parallel: 14
         
 #       - name: Run 
